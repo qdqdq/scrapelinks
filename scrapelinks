@@ -1,0 +1,28 @@
+#!/bin/perl
+
+use strict;
+use warnings;
+use WWW::Mechanize;
+use Term::ANSIColor;
+
+print color 'yellow';
+
+my $mech = WWW::Mechanize->new();
+
+print color 'reset';
+my $url = $ARGV[0] or die "Usage: scrapelinks [url]\n";
+
+$mech->get( $url );
+
+print color 'yellow';
+print $mech->title(), "\n";
+
+print color 'reset';
+print color 'green';
+if ( $mech->is_html() ) {
+	foreach my $o ( $mech->links() ) { 
+		print $o->url(), "\n"; 
+	};
+};
+
+print color 'reset';
